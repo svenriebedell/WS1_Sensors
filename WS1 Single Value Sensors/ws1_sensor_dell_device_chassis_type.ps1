@@ -1,4 +1,4 @@
-﻿# Returns Windows OEM License Key, Device Model Name, Serial-No. and Chassis Tpye
+﻿# Returns the chassis type translated to text
 # Return Type: String
 # Execution Context: System
 # Author: Sven Riebe
@@ -26,30 +26,22 @@ limitations under the License.
 
 <#Version Changes
 
-1.0.0   initial Version
+1.0.0   inital version
+
 
 #>
 
 <#
 .Synopsis
-   This PowerShell is for Workspace One UEM. Script need to be imported as Sensor and collect OEM-Win LicenseKey, Model, SerialNo and Chassis-Type for using later in Workspace One Intelligence.
+   This PowerShell is using WMI to select the Chassis ID and translate it to name for the Device.
    IMPORTANT: You need Workspace One UEM and Intelligence to using the full function of this Sensor.
    IMPORTANT: This script does not reboot the system to apply or query system.
 .DESCRIPTION
-   Powershell is using WMI for select OEM-Win LicenseKey, Model, SerialNo and Chassis-Type and handover to Workspace One.You need import this script in the Device / Sensors secetion in Workspace One UEM.
-
+   Powershell is using WMI for select Chassis ID and translate it to name and handover to Workspace One.You need import this script in the Device / Sensors secetion in Workspace One UEM.
+   
 #>
 
-
-#Preapare variables
-$OutputStatement = "Device Details: "
-$oem_licencekey = "OEM LicenseKey: "
-$oem_model = "Model: "
-$oem_servicetag = "SerialNo: "
-$oem_Chassis_type= "Formfactor: "
-$oem_licencekey_value = (Get-WmiObject -query 'select * from SoftwareLicensingService‘).OA3xOriginalProductKey
-$oem_model_value = Get-CimInstance -ClassName Win32_ComputerSystem | select -ExpandProperty Model
-$oem_servicetag_value = Get-WmiObject -class win32_bios | Select -ExpandProperty SerialNumber
+#Select value of chassis type
 $oem_Chassis_type_value = switch (Get-CimInstance -ClassName Win32_SystemEnclosure | select -ExpandProperty ChassisTypes)
     {
     # switch number to text
@@ -88,6 +80,6 @@ $oem_Chassis_type_value = switch (Get-CimInstance -ClassName Win32_SystemEnclosu
     32 {"Detachable"}
     33 {"IoT Gateway"}
     }
-$OutputStatement = $OutputStatement + $oem_licencekey + $oem_licencekey_value + " " +  $oem_model +  $oem_model_value + " " +  $oem_servicetag + $oem_servicetag_value + " " + $oem_Chassis_type + $oem_Chassis_type_value
 
-Write-Output $OutputStatement    
+#Write Key
+Write-Output $oem_Chassis_type_value
