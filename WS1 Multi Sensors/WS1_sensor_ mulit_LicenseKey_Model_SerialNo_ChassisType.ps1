@@ -41,7 +41,7 @@ limitations under the License.
 #>
 
 
-#Preapare variables
+#Prepare variables
 $OutputStatement = "Device Details: "
 $oem_licencekey = "OEM LicenseKey: "
 $oem_model = "Model: "
