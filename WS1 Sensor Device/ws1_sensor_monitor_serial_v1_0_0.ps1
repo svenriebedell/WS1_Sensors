@@ -1,0 +1,2 @@
+﻿$monitor_serial = Get-CimInstance -Namespace root\dcim\sysman -ClassName DCIM_DesktopMonitor -Filter "Caption='Root/MainSystemChassis/DisplayAdapterObj/DisplayObj:0'" | Select -ExpandProperty SerialNumber
+write-output $monitor_serial
