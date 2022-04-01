@@ -57,7 +57,7 @@ $OutputStatement = $OutputStatement+$BIOS_ThermalManagement+$BIOS_ThermalManagem
 
 
 #Select value of Fan HealthState
-$FanHealthState_Value = Get-CimInstance -ClassName Win32_Fan | select -ExpandProperty Status
+$FanHealthState_Value = @(Get-CimInstance -ClassName Win32_Fan | select -ExpandProperty Status)
 
 foreach($i in $FanHealthState_Value)
     {
