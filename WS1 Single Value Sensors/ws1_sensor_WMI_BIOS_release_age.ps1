@@ -1,4 +1,4 @@
-﻿# Returns value for BIOS ReleaseDate, ReleaseAge and BIOS Version
+﻿# Returns value for BIOS ReleaseAge in days
 # Return Type: String
 # Execution Context: System
 # Author: Sven Riebe
@@ -41,21 +41,16 @@ limitations under the License.
    
 #>
 #Prepare variables
-$OutputStatement = "Device Details: "
-$BIOS_ReleaseDate = "BIOS Release Date (DD/MM/YYYY): "
-$BIOS_Version = "BIOS Version: "
-$BIOS_ReleaseAge = "BIOS Release Age in Days: "
 $Today = Get-Date -Format dd/MM/yyyy
 
 #select values from WMI Win32_Bios Class
 $BIOS_ReleaseDate_Value = (Get-CimInstance -ClassName Win32_BIOS).ReleaseDate
-$BIOS_Version_Value = (Get-CimInstance -ClassName Win32_BIOS).SMBIOSBIOSVersion
 
 #compare BIOS Date and Today and reports age of day by BIOS Release
 $BIOS_ReleaseAge_Value = New-TimeSpan -Start $BIOS_ReleaseDate_Value.ToShortDateString() -End $Today
 
 #Prepare output string
-$OutputStatement = $OutputStatement+$BIOS_Version+$BIOS_Version_Value+" "+$BIOS_ReleaseDate+$BIOS_ReleaseDate_Value.ToShortDateString()+" "+$BIOS_ReleaseAge+$BIOS_ReleaseAge_Value.Days
+$OutputStatement = $BIOS_ReleaseAge_Value.Days
 
 
 Write-Output $OutputStatement
