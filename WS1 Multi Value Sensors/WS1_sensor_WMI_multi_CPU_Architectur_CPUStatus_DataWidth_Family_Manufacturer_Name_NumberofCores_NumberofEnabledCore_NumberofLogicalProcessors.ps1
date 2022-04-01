@@ -52,8 +52,7 @@ $CPU_Name = "CPU Name: "
 $CPU_NoCores = "Number of Cores: "
 $CPU_EnbCores = "Number enabled Cores: "
 $CPU_LogProcessors = "Number of logical Processors: "
-$Counter = 1
-$CPUCounter = ""
+
 
 #Select all values from Win32_Processor
 $CPU_Data = Get-CimInstance -ClassName Win32_Processor
@@ -62,7 +61,7 @@ $CPU_Data = Get-CimInstance -ClassName Win32_Processor
 $CPU_Architecture_Value = $CPU_Data.Architecture
 $CPU_Status_Value = $CPU_Data.CpuStatus
 $CPU_DataWidth_Value = $CPU_Data.DataWidth
-$CPU_Family_Value = $CPU_Data.Family
+$CPU_Family_Value = @($CPU_Data.Family)
 $CPU_Manufacturer_Value = $CPU_Data.Manufacturer
 $CPU_Name_Value = $CPU_Data.Name
 $CPU_NoCores_Value = $CPU_Data.NumberOfCores
@@ -282,7 +281,15 @@ $CPU_Family_Value = switch ($CPU_Family_Value)
    }
 
 
+#counting of CPU per device
+foreach ($i in $CPU_Family_Value)
+    {
+
+    $CPU_Quantity_Value = $CPU_Quantity_Value + 1
+
+    }
+
 #prepare string for output
-$OutputStatement = $OutputStatement+$CPU_Name+$CPU_Name_Value+" "+$CPU_Family+$CPU_Family_Value+" "+$CPU_Architecture+$CPU_Architecture_Value+" "+$CPU_DataWidth+$CPU_DataWidth_Value+" "+$CPU_NoCores+$CPU_NoCores_Value+" "+$CPU_EnbCores+$CPU_EnbCores_Value+" "+$CPU_LogProcessors+$CPU_LogProcessors_Value+" "+$CPU_Manufacturer+$CPU_Manufacturer_Value
+$OutputStatement = $OutputStatement+$CPU_Quantity+$CPU_Quantity_Value+" "+$CPU_Name+$CPU_Name_Value+" "+$CPU_Family+$CPU_Family_Value+" "+$CPU_Architecture+$CPU_Architecture_Value+" "+$CPU_DataWidth+$CPU_DataWidth_Value+" "+$CPU_NoCores+$CPU_NoCores_Value+" "+$CPU_EnbCores+$CPU_EnbCores_Value+" "+$CPU_LogProcessors+$CPU_LogProcessors_Value+" "+$CPU_Manufacturer+$CPU_Manufacturer_Value
 
 Write-Output $OutputStatement
