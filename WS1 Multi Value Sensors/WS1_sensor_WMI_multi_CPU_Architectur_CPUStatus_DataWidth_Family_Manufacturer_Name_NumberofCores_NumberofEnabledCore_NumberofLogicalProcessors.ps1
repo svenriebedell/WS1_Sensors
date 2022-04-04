@@ -42,7 +42,7 @@ limitations under the License.
 #>
 #Prepare variables
 $OutputStatement = "Device Details: "
-$CPU_Quantity = "No of CPU: "
+$CPU_Quantity = "Number of CPU: "
 $CPU_Architecture = "CPU Architecture: "
 $CPU_Status = "CPU Status: "
 $CPU_DataWidth = "DataWidth: "
@@ -282,6 +282,8 @@ $CPU_Family_Value = switch ($CPU_Family_Value)
 
 
 #counting of CPU per device
+$CPU_Quantity_Value = 0
+
 foreach ($i in $CPU_Family_Value)
     {
 
