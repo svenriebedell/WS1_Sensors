@@ -1,4 +1,4 @@
-﻿# Returns value for CPU Architectur, DataWidth, Family, Manufacturer, Name, NumberofCores, NumberofEnabledCore, NumberofLogicalProcessors
+﻿# Returns value for CPU Family
 # Return Type: String
 # Execution Context: System
 # Author: Sven Riebe
@@ -33,55 +33,22 @@ limitations under the License.
 
 <#
 .Synopsis
-   This PowerShell is using WMI to collect values from Win32_Processor. Select Value for CPU Architectur, DataWidth, Family, Manufacturer, Name, NumberofCores, NumberofEnabledCore, NumberofLogicalProcessors
+   This PowerShell is using WMI to collect values from Win32_Processor. Select Value for CPU Family
    IMPORTANT: You need Workspace One UEM and Intelligence to using the full function of this Sensor.
    IMPORTANT: This script does not reboot the system to apply or query system.
 .DESCRIPTION
    Powershell is using WMI for selcect values of Class Win32_Processor and handover to Workspace One.You need import this script in the Device / Sensors secetion in Workspace One UEM.
    
 #>
-#Prepare variables
-$OutputStatement = "Device Details: "
-$CPU_Quantity = "Number of CPU: "
-$CPU_Architecture = "CPU Architecture: "
-$CPU_Status = "CPU Status: "
-$CPU_DataWidth = "DataWidth: "
-$CPU_Family = "CPU Family: "
-$CPU_Manufacturer = "Manufacturer: "
-$CPU_Name = "CPU Name: "
-$CPU_NoCores = "Number of Cores: "
-$CPU_EnbCores = "Number enabled Cores: "
-$CPU_LogProcessors = "Number of logical Processors: "
 
 
 #Select all values from Win32_Processor
 $CPU_Data = Get-CimInstance -ClassName Win32_Processor
 
 #Collect values form $CPU_Data
-$CPU_Architecture_Value = $CPU_Data.Architecture
-$CPU_Status_Value = $CPU_Data.CpuStatus
-$CPU_DataWidth_Value = $CPU_Data.DataWidth
 $CPU_Family_Value = @($CPU_Data.Family)
-$CPU_Manufacturer_Value = $CPU_Data.Manufacturer
-$CPU_Name_Value = $CPU_Data.Name
-$CPU_NoCores_Value = $CPU_Data.NumberOfCores
-$CPU_EnbCores_Value = $CPU_Data.NumberOfEnabledCore
-$CPU_LogProcessors_Value = $CPU_Data.NumberOfLogicalProcessors
 
-#convert $CPU_Architecture_Value and CPU_Family_Value from number to text
-
-#$CPU_Architecture_Value
-$CPU_Architecture_Value = switch ($CPU_Architecture_Value)
-   {
-        0 {"x86"}
-        1 {"MIPS"}
-        2 {"Alpha"}
-        3 {"PowerPC"}
-        5 {"ARM"}
-        6 {"ia64"}
-        9 {"x64"}
-
-   }
+#convert CPU_Family_Value from number to text
 
 #$CPU_Family_Value
 
@@ -280,18 +247,8 @@ $CPU_Family_Value = switch ($CPU_Family_Value)
 
    }
 
-
-#counting of CPU per device
-$CPU_Quantity_Value = 0
-
-foreach ($i in $CPU_Family_Value)
-    {
-
-    $CPU_Quantity_Value = $CPU_Quantity_Value + 1
-
-    }
-
+   
 #prepare string for output
-$OutputStatement = $OutputStatement+$CPU_Quantity+$CPU_Quantity_Value+" "+$CPU_Name+$CPU_Name_Value+" "+$CPU_Family+$CPU_Family_Value+" "+$CPU_Architecture+$CPU_Architecture_Value+" "+$CPU_DataWidth+$CPU_DataWidth_Value+" "+$CPU_NoCores+$CPU_NoCores_Value+" "+$CPU_EnbCores+$CPU_EnbCores_Value+" "+$CPU_LogProcessors+$CPU_LogProcessors_Value+" "+$CPU_Manufacturer+$CPU_Manufacturer_Value
+$OutputStatement = $CPU_Family_Value
 
 Write-Output $OutputStatement
