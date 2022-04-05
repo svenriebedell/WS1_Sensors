@@ -48,18 +48,21 @@ $RAM_ModulSlots = "Count of RAM Slots: "
 $RAM_Speed = "RAM Speed: Mhz "
 $RAM_Capacity = "RAM Module Size: GB "
 $RAM_Capacity_Total = "RAM Size Device: GB "
+$RAM_MaxCapacity = "Max RAM Device: GB "
 $RAM_MemoryType = "RAM Type: "
 
 
-#Select all values from Win32_PhysicalMemory
+#Select all values from Win32_PhysicalMemory / Win32_PhysicalMemoryArray
 $RAM_Data = Get-CimInstance -ClassName Win32_PhysicalMemory
+$RAM_DataArray = Get-CimInstance -ClassName Win32_PhysicalMemoryArray
 
 #Collect values form $RAM_Data
 $RAM_ModulCount_Value = $RAM_Data.Count
-$RAM_ModulSlots_Value = (Get-CimInstance -ClassName Win32_PhysicalMemoryArray).MemoryDevices
+$RAM_ModulSlots_Value = $RAM_DataArray.MemoryDevices
 $RAM_Speed_Value = $RAM_Data.Speed.Item(0)
 $RAM_Capacity_Value = $RAM_Data.Capacity.Item(0)/1GB
 $RAM_Capacity_Total_Value = $RAM_Capacity_Value*$RAM_ModulCount_Value
+$RAM_MaxCapacity_Value = $RAM_DataArray.MaxCapacity/1MB
 $RAM_MemoryType_Value = $RAM_Data.SMBIOSMemoryType.Item(0)
 
 
@@ -114,6 +117,6 @@ $RAM_MemoryType_Value = switch ($RAM_MemoryType_Value)
 
 
 #prepare string for output
-$OutputStatement = $OutputStatement+$RAM_ModulCount+$RAM_ModulCount_Value+" "+$RAM_ModulSlots+$RAM_ModulSlots_Value+" "+$RAM_Speed+$RAM_Speed_Value+" "+$RAM_Capacity+$RAM_Capacity_Value+" "+$RAM_Capacity_Total+$RAM_Capacity_Total_Value+" "+$RAM_MemoryType+$RAM_MemoryType_Value
+$OutputStatement = $OutputStatement+$RAM_ModulCount+$RAM_ModulCount_Value+" "+$RAM_ModulSlots+$RAM_ModulSlots_Value+" "+$RAM_Speed+$RAM_Speed_Value+" "+$RAM_Capacity+$RAM_Capacity_Value+" "+$RAM_Capacity_Total+$RAM_Capacity_Total_Value+" "+$RAM_MaxCapacity+$RAM_MaxCapacity_Value+" "+$RAM_MemoryType+$RAM_MemoryType_Value
 
 Write-Output $OutputStatement
