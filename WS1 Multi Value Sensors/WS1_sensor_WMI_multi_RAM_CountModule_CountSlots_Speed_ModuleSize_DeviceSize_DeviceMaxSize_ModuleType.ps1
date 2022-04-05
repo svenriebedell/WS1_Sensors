@@ -1,4 +1,4 @@
-﻿# Returns value for Count RAM Module, Count Slots, Speed, Module Size, Device RAM Size, Type
+﻿# Returns value for Count RAM Module, Count Slots, Speed, Module Size, Device RAM Size, Device Max RAM Size, ModuleType
 # Return Type: String
 # Execution Context: System
 # Author: Sven Riebe
@@ -33,7 +33,7 @@ limitations under the License.
 
 <#
 .Synopsis
-   This PowerShell is using WMI to collect values from Win32_PhysicalMemory. Select Value for Count RAM Module, Count Slots, Speed, Module Size, Device RAM Size, Type
+   This PowerShell is using WMI to collect values from Win32_PhysicalMemory. Select Value for Count RAM Module, Count Slots, Speed, Module Size, Device RAM Size, Device Max RAM Size, ModuleType
    IMPORTANT: You need Workspace One UEM and Intelligence to using the full function of this Sensor.
    IMPORTANT: This script does not reboot the system to apply or query system.
 .DESCRIPTION
