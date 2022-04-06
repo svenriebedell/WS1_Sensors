@@ -1,2 +1,0 @@
-﻿$hdd_modelnumber = Get-CimInstance -Namespace root\dcim\sysman -ClassName DCIM_SMARTAttributeInfo -Filter "AttributeName='vendor-specific'" | Select -ExpandProperty ModelNumber
-write-output $hdd_modelnumber
