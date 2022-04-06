@@ -47,6 +47,7 @@ $HDD_Model = "Model HDD: "
 $HDD_Firmware = "Firmware: "
 $HDD_SerialNumber = "HDD S/N: "
 $HDD_DeviceID = "DriveID: "
+$IndexCounter = 0
 
 #Select all values from Win32_DiskDrive
 $HDD_Data = Get-CimInstance -ClassName Win32_DiskDrive
@@ -57,17 +58,19 @@ $HDD_Firmware_Value = $HDD_Data.FirmwareRevision
 $HDD_SerialNumber_Value = $HDD_Data.SerialNumber
 $HDD_DeviceID_Value = $HDD_Data.DeviceID
 
-$HDD = $HDD+$HDD_DeviceID+$HDD_DeviceID_Value+" "+$HDD_Model+$HDD_Model_Value+" "+$HDD_SerialNumber+$HDD_SerialNumber_Value+" "+$HDD_Firmware+$HDD_Firmware_Value+" "
 
-<#
+
+
 foreach($i in $HDD_Data)
     {
-
-    $HDD = $HDD+$HDD_DeviceID+$HDD_DeviceID_Value+" "+$HDD_Model+$HDD_Model_Value+" "+$HDD_SerialNumber+$HDD_SerialNumber_Value+" "+$HDD_Firmware+$HDD_Firmware_Value+" "
     
+    $HDD = $HDD+$HDD_DeviceID+$HDD_DeviceID_Value[$IndexCounter]+" "+$HDD_Model+$HDD_Model_Value[$IndexCounter]+" "+$HDD_SerialNumber+$HDD_SerialNumber_Value[$IndexCounter]+" "+$HDD_Firmware+$HDD_Firmware_Value[$IndexCounter]+" "
+    
+    $IndexCounter = $IndexCounter + 1
+
     }
 
-    #>
+    
 #prepare string for output
 $OutputStatement = $OutputStatement+$HDD
 
