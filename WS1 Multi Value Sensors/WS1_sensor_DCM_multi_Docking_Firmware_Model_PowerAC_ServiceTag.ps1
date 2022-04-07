@@ -33,12 +33,13 @@ limitations under the License.
 
 <#
 .Synopsis
-   This PowerShell is using WMI to collect values from Win32_FAN Class. Select Value for Docking Firmware, Model, PowerAC, ServiceTag.
+   This PowerShell is using Dell Command | Monitor to collect values from DCIM_Chassis Class. Select Value for Docking Firmware, Model, PowerAC, ServiceTag
+   IMPORTANT: You need to install Dell Command | Monitor first and Battery is only availible for mobile devices.
    IMPORTANT: You need Workspace One UEM and Intelligence to using the full function of this Sensor.
    IMPORTANT: This script does not reboot the system to apply or query system.
 .DESCRIPTION
-   Powershell is using WMI for selcect values of Class Win32_FAN and handover to Workspace One.You need import this script in the Device / Sensors secetion in Workspace One UEM.
-   
+   Powershell is using Dell Command | Monitor for selcect values of Class DCIM_Chassis and handover to Workspace One.You need import this script in the Device / Sensors secetion in Workspace One UEM.
+    
 #>
 #Prepare variables
 $OutputStatement = "Device Details: "
@@ -58,23 +59,36 @@ $Dock_PowerSupply_Value = $Dock_data.Model
 $Check_CreationClassName = $Dock_data.CreationClassName
 $DeviceCounter = 0
 
-# Select Docking Values from Array
-Foreach($i in $Dock_data)
-    {
-    
-    if($Check_CreationClassName[$DeviceCounter] -eq "DCIM_DockingStation")
-        {
+#Checking Device Type battery is only for mobile devices only
 
-        $OutputStatement = $OutputStatement+$Dock_Name+$Dock_Name_Value[$DeviceCounter]+" "+$Dock_Tag+$Dock_Tag_Value[$DeviceCounter]+" "+$Dock_Firmware+$Dock_Firmware_Value[$DeviceCounter]+" "+$Dock_PowerSupply+$Dock_PowerSupply_Value[$DeviceCounter]
+#Check the ChassisType
+$Check_Chassis_Type = Get-CimInstance -ClassName Win32_SystemEnclosure | select -ExpandProperty ChassisTypes
+
+if (($Check_Chassis_Type -eq 10) -or ($Check_Chassis_Type -eq 31) -or ($Check_Chassis_Type -eq 32))
+    {
+
+
+    # Select Docking Values from Array
+    Foreach($i in $Dock_data)
+        {
+    
+        if($Check_CreationClassName[$DeviceCounter] -eq "DCIM_DockingStation")
+            {
+
+            $OutputStatement = $OutputStatement+$Dock_Name+$Dock_Name_Value[$DeviceCounter]+" "+$Dock_Tag+$Dock_Tag_Value[$DeviceCounter]+" "+$Dock_Firmware+$Dock_Firmware_Value[$DeviceCounter]+" "+$Dock_PowerSupply+$Dock_PowerSupply_Value[$DeviceCounter]
+
+            }
+        
+            $DeviceCounter = $DeviceCounter +1
 
         }
-        
-        $DeviceCounter = $DeviceCounter +1
 
+    If($OutputStatement -eq "Device Details: ")
+        {
+
+        $OutputStatement = "No dock is attached"
+
+        }
     }
-
-
-
-
 
 Write-Output $OutputStatement
