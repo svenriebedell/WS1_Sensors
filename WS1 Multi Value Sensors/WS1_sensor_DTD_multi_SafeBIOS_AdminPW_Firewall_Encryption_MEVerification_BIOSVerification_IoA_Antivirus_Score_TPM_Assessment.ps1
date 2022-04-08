@@ -1,4 +1,4 @@
-﻿# Returns value for SafeBIOS AdminPW, Firewall, Encryption, MEVerification, BIOSVerification, IoA, Antivirus, Score_TPM, Assessment
+﻿# Returns value for SafeBIOS AdminPW, Firewall, Encryption, MEVerification, BIOSVerification, IoA, Antivirus, Score, TPM, Assessment
 # Return Type: String
 # Execution Context: System
 # Author: Sven Riebe

@@ -34,6 +34,7 @@ limitations under the License.
 <#
 .Synopsis
    This PowerShell is using Microsoft Event for control Dell SafeBIOS Security Assessment. Select Value for SafeBIOS Encryption.
+   IMPORTANT: You need to install Dell Trusted Device first https://www.dell.com/support/home/en-us/product-support/product/trusted-device/overview
    IMPORTANT: You need Workspace One UEM and Intelligence to using the full function of this Sensor.
    IMPORTANT: This script does not reboot the system to apply or query system.
 .DESCRIPTION
