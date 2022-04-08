@@ -1,5 +1,5 @@
 # WS1_Sensors
-This are sensors I have made for my Demo environment. You can use this for own. Please beware this are testing script so from time to time I will chanbe something or it could be some one does not working correctly in your environment. 
+These are sensors I have made for my Demo environment. You can use this for own. Please beware this are testing script so from time to time I will change something or it could be some one does not working correctly in your environment. Using is on your own risk and support.
 Please let me know if you find issues.
 
 Name convention:
