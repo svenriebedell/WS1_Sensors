@@ -1,4 +1,4 @@
-﻿# Returns value for Docking Firmware, Model, PowerAC, ServiceTag
+﻿# Returns value for Docking Model
 # Return Type: String
 # Execution Context: System
 # Author: Sven Riebe
@@ -33,29 +33,21 @@ limitations under the License.
 
 <#
 .Synopsis
-   This PowerShell is using Dell Command | Monitor to collect values from DCIM_Chassis Class. Select Value for Docking Firmware, Model, PowerAC, ServiceTag
-   IMPORTANT: You need to install Dell Command | Monitor first and Battery is only availible for mobile devices.
+   This PowerShell is using Dell Command | Monitor to collect values from DCIM_Chassis Class. Select Value for Docking Model
+   IMPORTANT: You need to install Dell Command | Monitor first and Docking is only availible for mobile devices.
    IMPORTANT: You need Workspace One UEM and Intelligence to using the full function of this Sensor.
    IMPORTANT: This script does not reboot the system to apply or query system.
 .DESCRIPTION
    Powershell is using Dell Command | Monitor for selcect values of Class DCIM_Chassis and handover to Workspace One.You need import this script in the Device / Sensors secetion in Workspace One UEM.
     
 #>
-#Prepare variables
-$OutputStatement = "Device Details: "
-$Dock_Name = "Model: "
-$Dock_Tag = "ServiceTag: "
-$Dock_Firmware = "FirmwareVersion: "
-$Dock_PowerSupply = "PowerSupply: "
+
 
 #Select value of class DCIM_Chassis
 $Dock_data = Get-CimInstance -Namespace root/DCIM/SYSMAN -ClassName DCIM_Chassis
 
 #collect values from $Dock_data
 $Dock_Name_Value = $Dock_data.Name
-$Dock_Tag_Value = $Dock_data.Tag
-$Dock_Firmware_Value = $Dock_data.Version
-$Dock_PowerSupply_Value = $Dock_data.Model
 $Check_CreationClassName = $Dock_data.CreationClassName
 $DeviceCounter = 0
 
@@ -75,7 +67,7 @@ if (($Check_Chassis_Type -eq 10) -or ($Check_Chassis_Type -eq 31) -or ($Check_Ch
         if($Check_CreationClassName[$DeviceCounter] -eq "DCIM_DockingStation")
             {
 
-            $OutputStatement = $OutputStatement+$Dock_Name+$Dock_Name_Value[$DeviceCounter]+" "+$Dock_Tag+$Dock_Tag_Value[$DeviceCounter]+" "+$Dock_Firmware+$Dock_Firmware_Value[$DeviceCounter]+" "+$Dock_PowerSupply+$Dock_PowerSupply_Value[$DeviceCounter]
+            $OutputStatement = $Dock_Name_Value[$DeviceCounter]
 
             }
         
@@ -83,7 +75,7 @@ if (($Check_Chassis_Type -eq 10) -or ($Check_Chassis_Type -eq 31) -or ($Check_Ch
 
         }
 
-    If($OutputStatement -eq "Device Details: ")
+    If($OutputStatement -eq "")
         {
 
         $OutputStatement = "No dock is attached"
