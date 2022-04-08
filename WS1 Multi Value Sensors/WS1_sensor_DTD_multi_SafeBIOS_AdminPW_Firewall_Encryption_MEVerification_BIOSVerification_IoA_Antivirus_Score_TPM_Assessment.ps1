@@ -34,6 +34,7 @@ limitations under the License.
 <#
 .Synopsis
    This PowerShell is using Microsoft Event for control Dell SafeBIOS Security Assessment. Select Value for SafeBIOS AdminPW, Firewall, Encryption, MEVerification, BIOSVerification, IoA, Antivirus, Score_TPM, Assessment.
+   IMPORTANT: You need to install Dell Trusted Device first https://www.dell.com/support/home/en-us/product-support/product/trusted-device/overview
    IMPORTANT: You need Workspace One UEM and Intelligence to using the full function of this Sensor.
    IMPORTANT: This script does not reboot the system to apply or query system.
 .DESCRIPTION
@@ -74,7 +75,7 @@ $Safe_BIOSVerify = "BIOS Verification: "
 $Safe_MEVerify = "ME Verification: "
 $Safe_DiskEncrypt = "Disk Encryption: "
 $Safe_Firewall = "Firewall: "
-$Safe_IoA = "Indicators of Attak: "
+$Safe_IoA = "Indicators of Attack: "
 $Safe_TPM = "TPM: "
 
 #Select score values
@@ -90,6 +91,6 @@ $Safe_TPM_Value = Get-SafeBIOSValue -Value 'TPM enabled'
 
 
 #Prepare output string
-$OutputStatement = $OutputStatement+$Safe_Score+$Safe_Score_Value+" "+$Safe_Antivirus+$Safe_Antivirus_Value+" "+$Safe_AdminPW+$Safe_AdminPW_Value+" "+$Safe_BIOSVerify+$Safe_BIOSVerify_Value+" "+$Safe_MEVerify+$Safe_MEVerify_Value+" "+$Safe_DiskEncrypt+$Safe_DiskEncrypt_Value+" "+$Safe_Firewall+$Safe_Firewall_Value+" "+$Safe_IoA+$Safe_IOA_Value+" "+$Safe_IOA_Value+" "+$Safe_TPM+$Safe_TPM_Value
+$OutputStatement = $OutputStatement+$Safe_Score+$Safe_Score_Value+" "+$Safe_Antivirus+$Safe_Antivirus_Value+" "+$Safe_AdminPW+$Safe_AdminPW_Value+" "+$Safe_BIOSVerify+$Safe_BIOSVerify_Value+" "+$Safe_MEVerify+$Safe_MEVerify_Value+" "+$Safe_DiskEncrypt+$Safe_DiskEncrypt_Value+" "+$Safe_Firewall+$Safe_Firewall_Value+" "+$Safe_IoA+$Safe_IOA_Value+" "+$Safe_TPM+$Safe_TPM_Value
 
 Write-Output $OutputStatement
