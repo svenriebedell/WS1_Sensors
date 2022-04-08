@@ -49,25 +49,41 @@ $FanNumber = "Fan No."
 $Counter = 1
 $FanCounter = ""
 
-#Select value of thermalmode currentvalue
-$BIOS_ThermalManagement_Value = Get-CimInstance -Namespace root/dcim/sysman/biosattributes -ClassName EnumerationAttribute -Filter 'AttributeName="ThermalManagement"' | select -ExpandProperty CurrentValue
+#Check the ChassisType
+$Check_Chassis_Type = Get-CimInstance -ClassName Win32_SystemEnclosure | select -ExpandProperty ChassisTypes
 
-#Prepare Multi string part1
-$OutputStatement = $OutputStatement+$BIOS_ThermalManagement+$BIOS_ThermalManagement_Value+" "
-
-
-#Select value of Fan HealthState
-$FanHealthState_Value = @(Get-CimInstance -ClassName Win32_Fan | select -ExpandProperty Status)
-
-foreach($i in $FanHealthState_Value)
+if (($Check_Chassis_Type -eq 10) -or ($Check_Chassis_Type -eq 31) -or ($Check_Chassis_Type -eq 32))
     {
-    $FanCounter = $FanNumber+$Counter
-    
-    #Prepare Multi string part2
-    $OutputStatement = $OutputStatement+$FanCounter+" "+$FanHealthState_Value[1-$Counter]+" "
 
-    #Counter for Fan No.
-    $Counter = $Counter +1
+    #Select value of thermalmode currentvalue
+    $BIOS_ThermalManagement_Value = Get-CimInstance -Namespace root/dcim/sysman/biosattributes -ClassName EnumerationAttribute -Filter 'AttributeName="ThermalManagement"' | select -ExpandProperty CurrentValue
+
+    #Prepare Multi string part1
+    $OutputStatement = $OutputStatement+$BIOS_ThermalManagement+$BIOS_ThermalManagement_Value+" "
+
+
+    #Select value of Fan HealthState
+    $FanHealthState_Value = @(Get-CimInstance -ClassName Win32_Fan | select -ExpandProperty Status)
+
+    foreach($i in $FanHealthState_Value)
+        {
+        $FanCounter = $FanNumber+$Counter
+    
+        #Prepare Multi string part2
+        $OutputStatement = $OutputStatement+$FanCounter+" "+$FanHealthState_Value[1-$Counter]+" "
+
+        #Counter for Fan No.
+        $Counter = $Counter +1
+        }
+
     }
+
+Else
+    {
+
+    $OutputStatement = "ThermalMode is not supported on this device"
+
+    }
+
 
 Write-Output $OutputStatement
