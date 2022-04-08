@@ -1,4 +1,4 @@
-﻿# Returns value for SafeBIOS AdminPW, Firewall, Encryption, MEVerification, BIOSVerification, IoA, Antivirus, Score, TPM, Assessment
+﻿# Returns value for SafeBIOS Assessment
 # Return Type: String
 # Execution Context: System
 # Author: Sven Riebe
@@ -33,7 +33,7 @@ limitations under the License.
 
 <#
 .Synopsis
-   This PowerShell is using Microsoft Event for control Dell SafeBIOS Security Assessment. Select Value for SafeBIOS AdminPW, Firewall, Encryption, MEVerification, BIOSVerification, IoA, Antivirus, Score_TPM, Assessment.
+   This PowerShell is using Microsoft Event for control Dell SafeBIOS Security Assessment. Select Value for SafeBIOS Assessment.
    IMPORTANT: You need to install Dell Trusted Device first https://www.dell.com/support/home/en-us/product-support/product/trusted-device/overview
    IMPORTANT: You need Workspace One UEM and Intelligence to using the full function of this Sensor.
    IMPORTANT: This script does not reboot the system to apply or query system.
@@ -66,33 +66,11 @@ function Get-SafeBIOSValue{
      
 }
 
-#Prepare variables
-$OutputStatement = "Device Details: "
-$Safe_Score = "Security Score: "
-$Safe_Antivirus = "Antivirus: "
-$Safe_AdminPW = "BIOS PW: "
-$Safe_BIOSVerify = "BIOS Verification: "
-$Safe_MEVerify = "ME Verification: "
-$Safe_DiskEncrypt = "Disk Encryption: "
-$Safe_Firewall = "Firewall: "
-$Safe_IoA = "Indicators of Attack: "
-$Safe_TPM = "TPM: "
-$Safe_Assessment = "Assessment Result: "
-
 #Select score values
-$Safe_Score_Value = Get-SafeBIOSValue -Value 'Score'
-$Safe_Antivirus_Value = Get-SafeBIOSValue -Value 'Antivirus'
-$Safe_AdminPW_Value = Get-SafeBIOSValue -Value 'BIOS Admin'
-$Safe_BIOSVerify_Value = Get-SafeBIOSValue -Value 'BIOS Verification'
-$Safe_MEVerify_Value = Get-SafeBIOSValue -Value 'ME Verification'
-$Safe_DiskEncrypt_Value = Get-SafeBIOSValue -Value 'Disk Encryption'
-$Safe_Firewall_Value = Get-SafeBIOSValue -Value 'Firewall solution'
-$Safe_IOA_Value = Get-SafeBIOSValue -Value 'Indicators of Attack'
-$Safe_TPM_Value = Get-SafeBIOSValue -Value 'TPM enabled'
 $Safe_Assessment_Value = Get-SafeBIOSValue -Value 'Result:' 
 
 
 #Prepare output string
-$OutputStatement = $OutputStatement+$Safe_Assessment+$Safe_Assessment_Value+" "+$Safe_Score+$Safe_Score_Value+" "+$Safe_Antivirus+$Safe_Antivirus_Value+" "+$Safe_AdminPW+$Safe_AdminPW_Value+" "+$Safe_BIOSVerify+$Safe_BIOSVerify_Value+" "+$Safe_MEVerify+$Safe_MEVerify_Value+" "+$Safe_DiskEncrypt+$Safe_DiskEncrypt_Value+" "+$Safe_Firewall+$Safe_Firewall_Value+" "+$Safe_IoA+$Safe_IOA_Value+" "+$Safe_TPM+$Safe_TPM_Value
+$OutputStatement = $Safe_Assessment_Value
 
 Write-Output $OutputStatement
