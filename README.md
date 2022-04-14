@@ -24,3 +24,12 @@ The script structure support import by API. Please review the following link to 
 
 https://github.com/vmware-samples/euc-samples/blob/master/UEM-Samples/Sensors/Windows/import_sensor_samples.ps1
 
+Most of the Dell commercial client systems are Windows-based, WMI and PowerShell are available in the IT infrastructure. This allows the IT professionals to integrate the scripts with their existing infrastructure or develop custom scripts based on their requirements. Microsoft has done a great job enhancing the PowerShell capabilities to integrate and manage WMI infrastructure.
+
+The Dell commercial client BIOS offers configurable entities through WMI, and the script library provides sample scripts to accomplish the tasks. This method configures the Dell business client systems that contain the common interface across multiple brands, including Latitude, OptiPlex, Precision, and XPS laptops. It enhances the hardware management features and does not change across the various versions of the Windows operating systems.
+
+Learning more about WMI and PowerShell For more details on WMI, see [https://docs.microsoft.com/en-us/windows/win32/wmisdk/wmi-start-page] For more details on PowerShell, see [https://docs.microsoft.com/en-us/powershell/scripting/overview?view=powershell-7] For more details on Agentless BIOS manageability, see [https://downloads.dell.com/manuals/common/dell-agentless-client-manageability.pdf]
+
+Microsoft Intune Microsoft Intune is a cloud-based service that focuses on Mobile Device Management (MDM). For more details on Microsoft Intune, see [https://docs.microsoft.com/en-us/mem/intune/fundamentals/what-is-intune]
+
+Deploying a PowerShell script from Intune The Microsoft Intune management extension allows you to upload the PowerShell scripts in Intune. You can run these scripts on the systems which are running on Windows 10 operating systems. The management extension enhances the Mobile Device Management (MDM) capabilities. For more information about Deploying a PowerShell script from Intune, see [https://docs.microsoft.com/en-us/mem/intune/apps/intune-management-extension]
